@@ -68,8 +68,16 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/tweets/:id/edit' do
-    # Grab instance of tweet
-    erb :'tweets/edit'
+    if !session[:id]
+      redirect to '/login'
+    else
+      @user = User.find(session[:id])
+      if Tweet.find(params[:id]).user != @user
+        redirect to "/tweets/#{params[:id]}"
+      else
+        erb :'tweets/edit'
+      end
+    end
   end
 
   patch '/tweets/:id' do
