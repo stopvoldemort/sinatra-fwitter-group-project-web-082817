@@ -57,10 +57,10 @@ class ApplicationController < Sinatra::Base
     redirect to "/tweets/#{@tweet.id}"
   end
 
-  # delete '/tweets/:id' do
-  #   # Receive delete from '/tweets/:id'
-  #   redirect to '/tweets'
-  # end
+  delete '/tweets/:id' do
+    Tweet.find(params[:id]).destroy
+    redirect to '/tweets'
+  end
 
 
 
