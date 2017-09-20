@@ -6,13 +6,17 @@
   </head>
   <body>
 
+    <form action="/logout" method="post">
+      <input id="submit" type="submit" value="Logout">
+    </form>
+
     <ul>
     <% @tweets.each do |t| %>
       <li> <%= "#{t.user.username}: '#{t.content}'" %> </li>
     <% end %>
     </ul>
 
-    
+
 
   </body>
 </html>
