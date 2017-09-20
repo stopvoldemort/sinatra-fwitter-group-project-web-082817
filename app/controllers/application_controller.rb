@@ -14,26 +14,26 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/signup' do
-    erb :new
+    erb :'users/new'
   end
 
 
   get '/login' do
-    erb :login
+    erb :'users/login'
   end
 
   get '/logout' do
-    erb :logout
+    erb :'users/logout'
   end
 
 
   get '/tweets' do
     # Grab all tweets
-    erb :index
+    erb :'tweets/index'
   end
 
   get '/tweets/new' do
-    erb :new
+    erb :'tweets/new'
   end
 
   post '/tweets' do
@@ -43,17 +43,17 @@ class ApplicationController < Sinatra::Base
 
   get '/tweets/:id' do
     # Grab instance of tweet
-    erb :show
+    erb :'tweets/show'
   end
 
   get '/tweets/:id/edit' do
     # Grab instance of tweet
-    erb :edit
+    erb :'tweets/edit'
   end
 
   patch '/tweets/:id' do
     # Receive patch from '/tweets/:id/edit'
-    erb "/tweets/#{@tweet.id}"
+    redirect to "/tweets/#{@tweet.id}"
   end
 
   delete '/tweets/:id' do
