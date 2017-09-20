@@ -9,6 +9,7 @@
     <h3>Enter your tweet:</h3>
     <form action="/tweets" method="post">
       <input type="text" name="content">
+      <input type="hidden" name="user_id" value="<%=@user.id%>"
       <input type="submit" value="Post Tweet">
     </form>
 
