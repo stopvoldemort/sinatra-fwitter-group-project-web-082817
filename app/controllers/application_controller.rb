@@ -22,9 +22,9 @@ class ApplicationController < Sinatra::Base
     erb :'users/login'
   end
 
-  get '/logout' do
-    session.find(@user.id).clear
-    erb :'users/logout'
+  post '/logout' do
+    session.clear
+    erb :'users/login'
   end
 
   post '/login' do
@@ -32,8 +32,7 @@ class ApplicationController < Sinatra::Base
     # Start sessions with users id
     @user = User.find_by(username: params[:username])
     session[:id] = @user.id
-    binding.pry
-    redirect to '/'
+    erb :'/tweets/index'
   end
 
   post '/signup' do
@@ -48,8 +47,12 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/tweets/new' do
-    # Need to send the user id of the person writing the new tweet.
-    erb :'tweets/new'
+    if !session[:id]
+      redirect to '/login'
+    else
+      @user = User.find(session[:id])
+      erb :'tweets/new'
+    end
   end
 
   post '/tweets' do
