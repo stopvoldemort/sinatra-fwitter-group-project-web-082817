@@ -23,7 +23,17 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/logout' do
+    session.find(@user.id).clear
     erb :'users/logout'
+  end
+
+  post '/login' do
+    # Receive post from login
+    # Start sessions with users id
+    @user = User.find_by(username: params[:username])
+    session[:id] = @user.id
+    binding.pry
+    redirect to '/'
   end
 
 
