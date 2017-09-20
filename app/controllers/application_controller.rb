@@ -39,7 +39,7 @@ class ApplicationController < Sinatra::Base
   post '/signup' do
     @user = User.create(params)
     session[:id] = @user.id
-    redirect to '/'
+    redirect to '/tweets'
   end
 
   get '/tweets' do
