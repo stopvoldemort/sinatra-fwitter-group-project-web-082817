@@ -28,23 +28,24 @@ class ApplicationController < Sinatra::Base
 
 
   get '/tweets' do
-    # Grab all tweets
+    @tweets = Tweet.all
     erb :'tweets/index'
   end
 
   get '/tweets/new' do
+    # Need to send the user id of the person writing the new tweet.
     erb :'tweets/new'
   end
 
   post '/tweets' do
-    # Receive post from '/tweets/new'
+    Tweet.create(params)
     redirect to '/tweets'
   end
 
-  get '/tweets/:id' do
-    # Grab instance of tweet
-    erb :'tweets/show'
-  end
+  # get '/tweets/:id' do
+  #   # Grab instance of tweet
+  #   erb :'tweets/show'
+  # end
 
   get '/tweets/:id/edit' do
     # Grab instance of tweet
@@ -56,10 +57,10 @@ class ApplicationController < Sinatra::Base
     redirect to "/tweets/#{@tweet.id}"
   end
 
-  delete '/tweets/:id' do
-    # Receive delete from '/tweets/:id'
-    redirect to '/tweets'
-  end
+  # delete '/tweets/:id' do
+  #   # Receive delete from '/tweets/:id'
+  #   redirect to '/tweets'
+  # end
 
 
 

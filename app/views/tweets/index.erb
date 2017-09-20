@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <ul>
+    <% @tweets.each do |t| %>
+      <li> <%= "#{t.user.username}: '#{t.content}'" %> </li>
+    <% end %>
+    </ul>
+
+  </body>
+</html>
