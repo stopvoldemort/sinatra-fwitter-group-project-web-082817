@@ -64,16 +64,12 @@ class ApplicationController < Sinatra::Base
 
   get '/tweets/:id' do
     @tweet = Tweet.find(params[:id])
-    erb :'tweets/show'
-  end
-
-  get '/tweets/:id/edit' do
     if !session[:id]
       redirect to '/login'
     else
       @user = User.find(session[:id])
-      if Tweet.find(params[:id]).user != @user
-        redirect to "/tweets/#{params[:id]}"
+      if @tweet.user != @user
+        erb :'tweets/show'
       else
         erb :'tweets/edit'
       end
@@ -82,6 +78,7 @@ class ApplicationController < Sinatra::Base
 
   patch '/tweets/:id' do
     # Receive patch from '/tweets/:id/edit'
+    @tweet = Tweet.find(params[:id])
     redirect to "/tweets/#{@tweet.id}"
   end
 
