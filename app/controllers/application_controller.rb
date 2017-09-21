@@ -2,6 +2,8 @@ require './config/environment'
 
 class ApplicationController < Sinatra::Base
 
+  include ApplicationHelpers
+
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
@@ -15,17 +17,25 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/signup' do
-    erb :'users/new'
+    if !logged_in?
+      erb :'users/new'
+    else
+      redirect to '/tweets'
+    end
   end
 
 
   get '/login' do
-    erb :'users/login'
+    if !logged_in?
+      erb :'users/login'
+    else
+      redirect to '/tweets'
+    end
   end
 
   post '/logout' do
     session.clear
-    erb :'users/login'
+    redirect to '/login'
   end
 
   post '/login' do
@@ -37,9 +47,9 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/signup' do
-    @username = params[:username]
-    if User.find_by(username: @username)
-      redirect to '/login'
+    # @username = params[:username]
+    if params.values.include?("")
+      redirect to '/signup'
     else
       @user = User.create(params)
       session[:id] = @user.id
