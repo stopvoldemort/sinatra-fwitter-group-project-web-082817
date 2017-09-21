@@ -33,6 +33,10 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  get '/logout' do
+    redirect to '/login'
+  end
+
   post '/logout' do
     session.clear
     redirect to '/login'
@@ -58,8 +62,12 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/tweets' do
-    @tweets = Tweet.all
-    erb :'tweets/index'
+    if session[:id]
+      @tweets = Tweet.all
+      erb :'tweets/index'
+    else
+      redirect to '/login'
+    end
   end
 
   get '/tweets/new' do
@@ -70,6 +78,12 @@ class ApplicationController < Sinatra::Base
       @tweets = Tweet.all
       erb :'tweets/new'
     end
+  end
+
+  get '/users/:slug' do
+    @user = User.find_by_slug(params[:slug])
+    @user_tweets = User.find_by_slug(params[:slug]).tweets
+    erb :'users/show'
   end
 
   post '/tweets' do
