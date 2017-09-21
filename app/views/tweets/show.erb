@@ -1,6 +1,17 @@
 <h1><%= User.find(@tweet.user_id).username %></h1>
 <p><%= @tweet.content %></p>
 
-<form action="/logout" method="post">
-  <input id="submit" type="submit" value="Logout">
-</form>
+<% if logged_in? %>
+
+  <form action="/logout" method="post">
+    <input id="submit" type="submit" value="Logout">
+  </form>
+
+  <form action="/tweets/<%= @tweet.id %>" method="post">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <input id="Delete Tweet" type="submit" name="Delete Tweet" value="Delete Tweet">
+  </form>
+
+  <a href="/tweets/<%= @tweet.id %>/edit">Edit Tweet</a>
+
+<% end %>

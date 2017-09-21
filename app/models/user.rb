@@ -8,4 +8,9 @@ class User < ActiveRecord::Base
   def self.find_by_slug(slug)
     User.find_by(username: slug.gsub(/-/, " "))
   end
+
+  def authenticate(password)
+    @user = User.find_by(password: password)
+    @user ? @user : false
+  end
 end
